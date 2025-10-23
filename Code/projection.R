@@ -13,9 +13,6 @@
   library(ggthemes)
   library(readxl)
 
-  plotheight <- 9
-  plotwidth <- 9
-  
   mapheight <- 9
   mapwidth <- 9
 
@@ -308,34 +305,3 @@
          width = mapwidth,
          file="Results/fig_map.png")
 
-
-### Country comparison #########################################################  
-    
-  Sweden <- data.frame(Country=rep("Sweden",6),
-                       Cohort=c("1950-59","1960-69","1970-79","1950-59","1960-69","1970-79"),
-                       Gender=c(rep("Men",3),rep("Women",3)),
-                       Childless=c(0.237,0.253,0.260,0.158,0.171,0.181))  
-  
-  Korea <- data.frame(Country=rep("South Korea",6),
-                      Cohort=c("1950-59","1960-69","1970-79","1950-59","1960-69","1970-79"),
-                      Gender=c(rep("Men",3),rep("Women",3)),
-                      Childless=c(0.0451,0.1205,0.3282,0.0383,0.0698,0.1667))  
-  
-  Childless <- rbind(Sweden,Korea)
-  
-  childless <- Childless |> ggplot(aes(x=Cohort, y=Childless, group=Gender,linetype=Gender)) +
-    geom_line(linewidth=1.1)+
-    geom_point()+
-    scale_linetype_manual(values=c("solid","dashed"))+
-    labs(y="Proportion chidless")+
-    facet_wrap(~Country)+
-    theme_bw(base_size=12) +
-    theme(axis.text=element_text(colour="black"), # NEW
-          axis.title = element_text(face="bold"), # NEW
-          legend.key.width = unit(1,"cm"), # NEW
-          strip.text.x = element_text(face="bold"))
-
-  ggsave(childless,
-         height = plotheight,
-         width = plotwidth,
-         file="Results/fig_childless.png")
