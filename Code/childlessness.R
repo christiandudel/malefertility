@@ -27,8 +27,28 @@ Korea <- data.frame(Country=rep("South Korea",6),
 
 KoreaCohort <- c("1950-59","1960-69","1970-77")
 
+# Senegal
+Senegal <- data.frame(Country=rep("Senegal",6),
+                      Cohort=c("1950-59","1960-69","1970-79",
+                               "1950-59","1960-69","1970-79"),
+                      Gender=c(rep("Men",3),rep("Women",3)),
+                      Childless=c(0.0298699,0.0523904,0.0714854,
+                                  0.0277347,0.0538553,0.0502836))
+
+# India 
+India <- data.frame(Country=rep("India",6),
+                      Cohort=c("1950-59","1960-69","1970-79",
+                               "1950-59","1960-69","1970-79"),
+                      Gender=c(rep("Men",3),rep("Women",3)),
+                      Childless=c(0.0347961,0.0780119,0.1009352,
+                                  0.0329084,0.0355627,0.0341814))
+
 # Combination
-Childless <- rbind(Sweden,Korea)
+Childless <- rbind(Sweden,Korea,Senegal,India)
+
+# Factor
+Childless$Country <- factor(Childless$Country,
+                            levels=c("Sweden","South Korea","India","Senegal"))
 
 
 ### Figure 1 ###################################################################

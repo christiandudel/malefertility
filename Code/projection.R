@@ -296,7 +296,7 @@
     #scale_fill_manual(values = wesanderson::wes_palette("Zissou1", n=4, type = "discrete"))+
     scale_fill_manual(values = c("#fe9929","#beaed4","#1f78b4","#33a02c"))+
     guides(fill=guide_legend(title="Predicted birth squeeze"))+
-    ggtitle("Will any birth squeeze occur in the key scenarios (2024-2060)?") +
+    ggtitle("Will any birth squeeze occur in 2024-2060?") +
     theme_map(base_size=12)
   
   # Save
