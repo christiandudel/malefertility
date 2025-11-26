@@ -271,10 +271,10 @@
           filter(Time%in%c(2023:2060) & scenario %in% -1:1 & !is.na(TFRratio)) |> 
           group_by(Location) |> 
           summarise(squeeze=ifelse(any(TFRratio<0.9) & !any(TFRratio>1.1),
-                                   "Birth squeeze (men)",
+                                   "Men",
                                    ifelse(!any(TFRratio<0.9) & any(TFRratio>1.1),
-                                          "Birth squeeze (women)",
-                                          ifelse(any(TFRratio<0.9) & any(TFRratio>1.1),"Birth squeeze (both)","Balanced"))))
+                                          "Women",
+                                          ifelse(any(TFRratio<0.9) & any(TFRratio>1.1),"Both","None"))))
   
   # Count population experiencing the categories
   who <- results |> 
