@@ -109,13 +109,18 @@
                                                  0,
                                                  Births/PopMale))
     
+    # Population in reproductive age
+    shiftall <- shiftall |> mutate(repMale=ifelse(AgeGrp.x%in%15:55,PopMale,0),
+                                   repFemale=ifelse(AgeGrp.x%in%15:49,PopFemale,0))
+    
     # TFR
     tfr_men <- shiftall %>% 
                # Group by country and year
                group_by(Location,LocID,Time) %>%
                # Get sum of ASFRs, Total population
                summarize(mTFR=sum(ASFRm),
-                         pop=sum(PopMale)+sum(PopFemale)) |> 
+                         pop=sum(PopMale)+sum(PopFemale),
+                         rep=sum(repMale)+sum(repFemale)) |> 
                # Add age difference to the data
                mutate(TFRtype=paste0(ad)) 
                
@@ -280,10 +285,12 @@
   who <- results |> 
             filter(Time==2023 & Location %in% world$region & TFRtype=="1") |> 
             left_join(ever) |> 
-            select(Location,pop,squeeze) |> 
+            select(Location,pop,rep,squeeze) |> 
             group_by(squeeze) |> 
-            summarize(tot=sum(pop)) |> 
-            mutate(prop=tot/sum(tot))
+            summarize(tot1=sum(pop),
+                      tot2=sum(rep)) |> 
+            mutate(prop1=tot1/sum(tot1), # Total population
+                   prop2=tot2/sum(tot2)) # Population in reproductive age
   
   # Merge with map data
   ever <- ever |> rename('region'="Location")
