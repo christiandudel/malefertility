@@ -187,24 +187,25 @@
                                    .default=Location))
   
   # Select countries 
-  countrylist <- c("China","India","Nepal","South Korea",
-                   "Taiwan","Norway","Sweden","Germany",
-                   "France","Italy","Spain","Colombia",
-                   "Brazil","Mexico","United Kingdom","USA")
+  countrylist <- c("Sweden","South Korea","India","Senegal")
 
   # Plot
-  fig1 <- results |> filter(Time>=2023 & scenario %in% -2:2 & 
+  fig1 <- results |> filter(Time>=2023 & scenario %in% -1:1 & 
                               Location %in% countrylist) |> 
     ggplot(aes(x=Time,y=TFRratio,group=scenario,col=Type)) + 
     facet_wrap(~Location) + 
-    geom_line()+
-    scale_colour_manual(values = c("darkred", "yellow2","blue")) +
+    geom_line(linewidth=1.05)+
+    scale_colour_manual(values = c("#beaed4","#1f78b4","#33a02c")) +
     labs(x="Year",
          y="Predicted TFR ratio",
          title="Scenarios for trends in global TFR ratios, 2023-2100",
-         subtitle="Selected countries",
-         caption="Source: Own calculations based on UN data")+
+         subtitle="Selected countries")+
     theme(axis.text.x = element_text(size=8, angle=45))
+  
+  ggsave(fig1,
+         height = mapheight,
+         width = mapwidth,
+         file="Results/supp_fig_select.png")
 
   
 ### Get map, fix country names #################################################
