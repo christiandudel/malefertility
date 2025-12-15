@@ -361,6 +361,12 @@
     ggtitle("Total fertility rate of women in 2023") +
     theme_map(base_size=12)
   
+  
+  ggsave(figmap3,
+         height = mapheight,
+         width = mapwidth,
+         file="Results/supp_map_tfr.png")
+  
   # Map of age difference
   agemap <- results |> group_by(Location) |> filter(Time==2023 & scenario==0) 
   agemap <- agemap |> rename('region'="Location") |> select(region,diff)
@@ -380,4 +386,9 @@
     guides(fill=guide_legend(title="Age difference in years"))+
     ggtitle("Average parental age difference") +
     theme_map(base_size=12)
+  
+  ggsave(figmap4,
+         height = mapheight,
+         width = mapwidth,
+         file="Results/supp_map_age.png")
   
