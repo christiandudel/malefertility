@@ -1,6 +1,4 @@
-### TFR ratios: proof of concept ###############################################
-
-  # Uses UN Population Prospects results/data to bound TFR ratios
+### TFR ratios #################################################################
 
 
 ### Packages & Settings ########################################################
@@ -312,3 +310,74 @@
          width = mapwidth,
          file="Results/fig_map.png")
 
+
+### Robustness check ###########################################################
+  
+  # Get categories: At least 5 years of squeeze
+  ever2 <- results |> 
+    filter(Time%in%c(2023:2060) & scenario %in% -1:1 & !is.na(TFRratio)) |> 
+    group_by(Location) |> 
+    summarise(squeeze=ifelse(sum(TFRratio<0.9)>5 & sum(TFRratio>1.1)<=5,
+                             "Men",
+                             ifelse(sum(TFRratio<0.9)<=5 & sum(TFRratio>1.1)>5,
+                                    "Women",
+                                    ifelse(sum(TFRratio<0.9)>5 & sum(TFRratio>1.1)>5,"Both","None"))))
+  
+  # Merge with map data
+  ever2 <- ever2 |> rename('region'="Location")
+  everworld2 <- inner_join(world,ever2,by="region")
+  
+  # Plot map 
+  figmap2 <- ggplot(data = everworld2, mapping = aes(x = long, y = lat, group = group)) + 
+    coord_fixed(1.3) +
+    geom_polygon(col="white",aes(fill=squeeze)) +
+    #scale_fill_manual(values = wesanderson::wes_palette("Zissou1", n=4, type = "discrete"))+
+    scale_fill_manual(values = c("#fe9929","#beaed4","#1f78b4","#33a02c"))+
+    guides(fill=guide_legend(title="Predicted birth squeeze"))+
+    ggtitle("Will any birth squeeze occur in 2024-2060?") +
+    theme_map(base_size=12)
+  
+  
+### Additional results #########################################################
+  
+  # Map of total fertility rate
+  TFRmap <- results |> group_by(Location) |> filter(Time==2023 & scenario==0) 
+  TFRmap <- TFRmap |> rename('region'="Location") |> select(region,TFR)
+  TFRmap <- inner_join(world,TFRmap,by="region")
+  TFRmap <- TFRmap |> mutate(TFRgroup=case_when(
+                                      TFR<1.5 ~ "<1.5",
+                                      TFR>=1.5 & TFR<2 ~ "1.5-2.0",
+                                      TFR>=2 & TFR<2.5 ~ "2.0-2.5",
+                                      TFR>=2.5 & TFR<3.5 ~ "2.5-3.5",
+                                      TFR>=3.5 & TFR<4.5 ~ "3.5-4.5",
+                                      TFR>=4.5 & TFR<5.5 ~ "4.5-5.5",
+                                      TFR>=5.5 & TFR<6.5 ~ "5.5<"))
+  
+  figmap3 <- ggplot(data = TFRmap, mapping = aes(x = long, y = lat, group = group)) + 
+    coord_fixed(1.3) +
+    geom_polygon(col="grey40",aes(fill=TFRgroup)) +
+    scale_fill_manual(values = c("#ffffcc","#c7e9b4","#7fcdbb","#41b6c4","#1d91c0","#225ea8","#0c2c84"))+
+    guides(fill=guide_legend(title="TFR"))+
+    ggtitle("Total fertility rate of women in 2023") +
+    theme_map(base_size=12)
+  
+  # Map of age difference
+  agemap <- results |> group_by(Location) |> filter(Time==2023 & scenario==0) 
+  agemap <- agemap |> rename('region'="Location") |> select(region,diff)
+  agemap <- inner_join(world,agemap,by="region")
+  agemap <- agemap |> mutate(diffgroup=case_when(
+    diff%in%2:3 ~ "2-3",
+    diff%in%4:5 ~ "4-5",
+    diff%in%6:7 ~ "6-7",
+    diff%in%8:9 ~ "8-9",
+    diff>9 ~ "9<"
+    ))
+  
+  figmap4 <- ggplot(data = agemap, mapping = aes(x = long, y = lat, group = group)) + 
+    coord_fixed(1.3) +
+    geom_polygon(col="grey40",aes(fill=diffgroup)) +
+    scale_fill_manual(values = c("#f0f9e8","#a8ddb5","#7bccc4","#43a2ca","#0868ac"))+
+    guides(fill=guide_legend(title="Age difference in years"))+
+    ggtitle("Average parental age difference") +
+    theme_map(base_size=12)
+  
