@@ -187,7 +187,14 @@
                                    .default=Location))
   
   # Select countries 
-  countrylist <- c("Sweden","South Korea","India","Senegal")
+  countrylist <- c("Sweden","South Korea","Republic of Korea","India","Senegal")
+  
+  # Descriptive table
+  tab1 <- results |> filter(Time%in%c(1980,2000,2023) & scenario ==0 & 
+                      Location %in% countrylist) |> select(Location,Time,TFR)
+  
+  tab2 <- age_women|> filter(Time%in%c(1980,2000,2023)  & 
+                       Location %in% countrylist)
 
   # Plot
   fig1 <- results |> filter(Time%in%c(2023:2060) & scenario %in% -1:1 & 
