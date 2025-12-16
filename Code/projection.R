@@ -190,7 +190,7 @@
   countrylist <- c("Sweden","South Korea","India","Senegal")
 
   # Plot
-  fig1 <- results |> filter(Time>=2023 & scenario %in% -1:1 & 
+  fig1 <- results |> filter(Time%in%c(2023:2060) & scenario %in% -1:1 & 
                               Location %in% countrylist) |> 
     ggplot(aes(x=Time,y=TFRratio,group=scenario,col=Type)) + 
     facet_wrap(~Location) + 
