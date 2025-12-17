@@ -9,36 +9,36 @@ plotwidth <- 9
 
 # Sweden
 Sweden <- data.frame(Country=rep("Sweden",6),
-                     Cohort=c("1950-59","1960-69","1970-79",
-                              "1950-59","1960-69","1970-79"),
+                     Cohort=c("1950s","1960s","1970s",
+                              "1950s","1960s","1970s"),
                      Gender=c(rep("Men",3),rep("Women",3)),
                      Childless=c(0.219,0.236,0.247,
                                  0.150,0.162,0.174))  
 
-SwedenCohort <- c("1950-59","1960-69","1970-78")
+SwedenCohort <- c("1950s","1960s","1970-78")
 
 # Korea
 Korea <- data.frame(Country=rep("South Korea",6),
-                    Cohort=c("1950-59","1960-69","1970-79",
-                             "1950-59","1960-69","1970-79"),
+                    Cohort=c("1950s","1960s","1970s",
+                             "1950s","1960s","1970s"),
                     Gender=c(rep("Men",3),rep("Women",3)),
                     Childless=c(0.05814,0.13644,0.25531,
                                 0.04591,0.07137,0.12881))  
 
-KoreaCohort <- c("1950-59","1960-69","1970-77")
+KoreaCohort <- c("1950s","1960s","1970-77")
 
 # Senegal
 Senegal <- data.frame(Country=rep("Senegal",6),
-                      Cohort=c("1950-59","1960-69","1970-79",
-                               "1950-59","1960-69","1970-79"),
+                      Cohort=c("1950s","1960s","1970s",
+                               "1950s","1960s","1970s"),
                       Gender=c(rep("Men",3),rep("Women",3)),
                       Childless=c(0.0298699,0.0523904,0.0714854,
                                   0.0277347,0.0538553,0.0502836))
 
 # India 
 India <- data.frame(Country=rep("India",6),
-                      Cohort=c("1950-59","1960-69","1970-79",
-                               "1950-59","1960-69","1970-79"),
+                      Cohort=c("1950s","1960s","1970s",
+                               "1950s","1960s","1970s"),
                       Gender=c(rep("Men",3),rep("Women",3)),
                       Childless=c(0.0347961,0.0780119,0.1009352,
                                   0.0329084,0.0355627,0.0341814))
