@@ -62,7 +62,7 @@ childless <- Childless |> ggplot(aes(x=Cohort,
   scale_linetype_manual(values=c("solid","dashed"))+
   labs(y="Proportion chidless")+
   facet_wrap(~Country)+
-  theme_bw(base_size=12) +
+  theme_bw(base_size=16) +
   theme(axis.text=element_text(colour="black"), 
         axis.title = element_text(face="bold"), 
         legend.key.width = unit(1,"cm"), 

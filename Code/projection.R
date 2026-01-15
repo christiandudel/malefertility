@@ -310,7 +310,7 @@
     scale_fill_manual(values = c("#fe9929","#beaed4","#1f78b4","#33a02c"))+
     guides(fill=guide_legend(title="Predicted birth squeeze"))+
     ggtitle("Will any birth squeeze occur in 2024-2060?") +
-    theme_map(base_size=12)
+    theme_map(base_size=14)
   
   # Save
   ggsave(figmap,
