@@ -359,7 +359,9 @@
                                       TFR>=2.5 & TFR<3.5 ~ "2.5-3.5",
                                       TFR>=3.5 & TFR<4.5 ~ "3.5-4.5",
                                       TFR>=4.5 & TFR<5.5 ~ "4.5-5.5",
-                                      TFR>=5.5 & TFR<6.5 ~ "5.5<"))
+                                      TFR>=5.5  ~ ">5.5"),
+                             TFRgroup=factor(TFRgroup,
+                                             levels=c("<1.5","1.5-2.0","2.0-2.5","2.5-3.5","3.5-4.5","4.5-5.5",">5.5")))
   
   figmap3 <- ggplot(data = TFRmap, mapping = aes(x = long, y = lat, group = group)) + 
     coord_fixed(1.3) +
@@ -380,12 +382,14 @@
   agemap <- agemap |> rename('region'="Location") |> select(region,diff)
   agemap <- inner_join(world,agemap,by="region")
   agemap <- agemap |> mutate(diffgroup=case_when(
-    diff%in%2:3 ~ "2-3",
-    diff%in%4:5 ~ "4-5",
-    diff%in%6:7 ~ "6-7",
-    diff%in%8:9 ~ "8-9",
-    diff>9 ~ "9>"
-    ))
+                                diff%in%2:3 ~ "2-3",
+                                diff%in%4:5 ~ "4-5",
+                                diff%in%6:7 ~ "6-7",
+                                diff%in%8:9 ~ "8-9",
+                                diff>9 ~ ">9"),
+                             diffgroup=factor(diffgroup,
+                                              levels=c("2-3","4-5","6-7","8-9",">9")))
+  
   
   figmap4 <- ggplot(data = agemap, mapping = aes(x = long, y = lat, group = group)) + 
     coord_fixed(1.3) +
