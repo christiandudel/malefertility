@@ -384,7 +384,7 @@
     diff%in%4:5 ~ "4-5",
     diff%in%6:7 ~ "6-7",
     diff%in%8:9 ~ "8-9",
-    diff>9 ~ "9<"
+    diff>9 ~ "9>"
     ))
   
   figmap4 <- ggplot(data = agemap, mapping = aes(x = long, y = lat, group = group)) + 
